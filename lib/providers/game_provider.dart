@@ -11,7 +11,7 @@ class GameProvider extends ChangeNotifier{
     "images/dice-six-faces-five.png",
     "images/dice-six-faces-six.png",
   ];
-  int index1 = 0, index2 = 0, sum = 0, count = 0, point = 0;
+  int index1 = 0, index2 = 0, sum = 0, count = 0, point = 0, win = 0, lose = 0;
   String status = '';
   Random random = Random.secure();
   bool hasGameStarted = false;
@@ -29,10 +29,12 @@ class GameProvider extends ChangeNotifier{
     if(count == 1){
       if(sum == 7 || sum == 11){
         status = 'You Win';
+        win += 1;
         hasGameStopped = true;
       }
       if(sum == 2 || sum == 3 || sum == 12){
         status = 'You lose';
+        lose += 1;
         hasGameStopped = true;
       }
       if(sum == 4 || sum == 5 || sum == 6 || sum == 8 || sum == 9 || sum == 10){
@@ -41,10 +43,12 @@ class GameProvider extends ChangeNotifier{
     }else{
       if(point == sum){
         status = 'You Win';
+        win += 1;
         hasGameStopped = true;
       }
       if(sum == 7){
         status = "You lose";
+        lose +=1;
         hasGameStopped = true;
       }
     }
@@ -56,6 +60,7 @@ class GameProvider extends ChangeNotifier{
     sum = 0;
     point = 0;
     status = "";
+    count = 0;
     hasGameStarted = false;
     hasGameStopped = false;
   }
