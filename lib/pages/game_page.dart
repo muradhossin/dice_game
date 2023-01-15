@@ -12,11 +12,13 @@ class GamePage extends StatefulWidget {
 
 class _GamePageState extends State<GamePage> {
   late GameProvider gameProvider;
+
   @override
   void didChangeDependencies() {
     gameProvider = Provider.of<GameProvider>(context, listen: true);
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +29,26 @@ class _GamePageState extends State<GamePage> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Text(
+              gameProvider.status,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            if (gameProvider.hasGameStarted)
+              Text(
+                'The sum of dice are: ${gameProvider.sum}',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            if (gameProvider.point > 0)
+              Text(
+                'Your point is: ${gameProvider.point}',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            const SizedBox(
+              height: 50,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -42,15 +64,31 @@ class _GamePageState extends State<GamePage> {
                 ),
               ],
             ),
-            const SizedBox(height: 50,),
-            ElevatedButton(
-              onPressed: (){
+            const SizedBox(
+              height: 50,
+            ),
+            gameProvider.hasGameStopped? ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  gameProvider.reset();
+
+                });
+              },
+              child: const Text(
+                'Restart Game',
+                style: TextStyle(fontSize: 20),
+              ),
+            ): ElevatedButton(
+              onPressed: () {
                 setState(() {
                   gameProvider.rollTheDices();
+                  gameProvider.checkResult();
                 });
-
               },
-              child: const Text('Roll the Dices', style: TextStyle(fontSize: 20),),
+              child: const Text(
+                      'Roll the Dices',
+                      style: TextStyle(fontSize: 20),
+                    ),
             ),
           ],
         ),
