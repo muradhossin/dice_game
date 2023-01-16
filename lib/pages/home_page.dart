@@ -63,9 +63,9 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.pushNamed(context, GamePage.routeName);
             },
-            child: Text(
+            child: const Text(
               "PLAY NOW",
-              style: Theme.of(context).textTheme.headline4,
+              style: TextStyle(fontSize: 30, color: Colors.white),
             ),
           ),
         ],

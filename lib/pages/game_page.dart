@@ -24,13 +24,14 @@ class _GamePageState extends State<GamePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dice Game'),
-
       ),
       body: ListView(
         shrinkWrap: true,
         children: [
           buildPointCount(),
-          const SizedBox(height: 50,),
+          const SizedBox(
+            height: 50,
+          ),
           buildGameBody(),
         ],
       ),
@@ -41,16 +42,22 @@ class _GamePageState extends State<GamePage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Column(
             children: [
-              Column(
-                children: [
-                  Text('  Win: ${gameProvider.win}', style: Theme.of(context).textTheme.headline6,),
-                  Text('Lose: ${gameProvider.lose}', style: Theme.of(context).textTheme.headline6,),
-                ],
-              )
+              Text(
+                '  Win: ${gameProvider.win}',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+              Text(
+                'Lose: ${gameProvider.lose}',
+                style: Theme.of(context).textTheme.headline6,
+              ),
             ],
-          ),
+          )
+        ],
+      ),
     );
   }
 
@@ -60,7 +67,7 @@ class _GamePageState extends State<GamePage> {
       children: [
         Text(
           gameProvider.status,
-          style: Theme.of(context).textTheme.headline4,
+          style: Theme.of(context).textTheme.headline3,
         ),
         const SizedBox(
           height: 50,
@@ -99,29 +106,33 @@ class _GamePageState extends State<GamePage> {
         const SizedBox(
           height: 50,
         ),
-        gameProvider.hasGameStopped? ElevatedButton(
-          onPressed: () {
-            setState(() {
-              gameProvider.reset();
-
-            });
-          },
-          child: const Text(
-            'Restart Game',
-            style: TextStyle(fontSize: 20),
-          ),
-        ): ElevatedButton(
-          onPressed: () {
-            setState(() {
-              gameProvider.rollTheDices();
-              gameProvider.checkResult();
-            });
-          },
-          child: const Text(
+        gameProvider.hasGameStopped
+            ? ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                onPressed: () {
+                  setState(() {
+                    gameProvider.reset();
+                  });
+                },
+                child: const Text(
+                  'Restart Game',
+                  style: TextStyle(fontSize: 20),
+                ),
+              )
+            : ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    gameProvider.rollTheDices();
+                    gameProvider.checkResult();
+                  });
+                },
+                child: const Text(
                   'Roll the Dices',
                   style: TextStyle(fontSize: 20),
                 ),
-        ),
+              ),
       ],
     );
   }
