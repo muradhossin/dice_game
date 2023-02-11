@@ -35,7 +35,7 @@ Clone the repository
 Move to the desired folder
 
 ```bash
-  cd \dice_game.git
+  cd \dice_game
 ```
 To run the app, simply write
 
